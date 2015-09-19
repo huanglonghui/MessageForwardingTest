@@ -98,14 +98,19 @@ id nameGetter(id self, SEL cmd){
 
 
 - (void)forwardInvocation:(NSInvocation *)anInvocation{
-
-    [anInvocation setTarget:self.companyModel];
-    [anInvocation setSelector:@selector(deptName:)];
-    BOOL hasCompanyName = YES;
-    //第一个和第一个参数是target和sel
-    [anInvocation setArgument:&hasCompanyName atIndex:2];
-    [anInvocation retainArguments];
-    [anInvocation invoke];
+    
+    NSString *selStr = NSStringFromSelector(anInvocation.selector);
+    if ([selStr isEqualToString:@"deptName"]) {
+        [anInvocation setTarget:self.companyModel];
+        [anInvocation setSelector:@selector(deptName:)];
+        BOOL hasCompanyName = YES;
+        //第一个和第一个参数是target和sel
+        [anInvocation setArgument:&hasCompanyName atIndex:2];
+        [anInvocation retainArguments];
+        [anInvocation invoke];
+    }else{
+        [super forwardInvocation:anInvocation];
+    }
 }
 
 @end
