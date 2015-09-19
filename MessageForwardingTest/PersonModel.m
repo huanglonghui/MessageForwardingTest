@@ -78,7 +78,7 @@ id nameGetter(id self, SEL cmd){
     if ([selStr isEqualToString:@"companyName"]) {
         return self.companyModel;
     }else{
-        return nil;
+        return [super forwardingTargetForSelector:aSelector];
     }
 }
 
